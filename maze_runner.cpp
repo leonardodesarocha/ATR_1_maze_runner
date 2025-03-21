@@ -7,6 +7,9 @@
 #include <windows.h>
 #include <stdlib.h>
 
+// Tempo entre telas
+#define TIME 10
+
 // Representação do labirinto
 using Maze = std::vector<std::vector<char>>;
 
@@ -65,7 +68,7 @@ Position load_maze(const std::string& file_name) {
 }
 
 // Função para imprimir o labirinto
-void print_maze(int row, int col) {
+void print_maze1(int row, int col) {
     // 1. Percorra a matriz 'maze' usando um loop aninhado
     // 3. Adicione uma quebra de linha (std::cout << '\n') ao final de cada linha do labirinto
     // 2. Imprima cada caractere usando std::cout
@@ -77,6 +80,32 @@ void print_maze(int row, int col) {
             }
             else
                 std::cout << maze[i][j];
+        }
+        std::cout << '\n';
+    }
+}
+
+// Função para imprimir o labirinto difetente
+void print_maze(int row, int col) {
+    // 1. Percorra a matriz 'maze' usando um loop aninhado
+    // 3. Adicione uma quebra de linha (std::cout << '\n') ao final de cada linha do labirinto
+    // 2. Imprima cada caractere usando std::cout
+
+    for (int i = 0; i < num_rows; i++) {
+        for (int j = 0; j < num_cols; j++) {
+            if (i == row && j == col) {
+                std::cout << "o";
+            }
+            else {
+                if (maze[i][j] == '#')
+                    std::cout << "▓";
+                else if (maze[i][j] == 'x')
+                    std::cout << "▒";
+                else if (maze[i][j] == '.')
+                    std::cout << " ";
+                else
+                    std::cout << maze[i][j];
+            }
         }
         std::cout << '\n';
     }
@@ -108,9 +137,9 @@ bool walk(Position pos) {
     print_maze(pos.row, pos.col);
 
     // 3. Adicione um pequeno atraso para visualização:
-    //    std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    //std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    Sleep(10);
+    //    std::this_thread::sleep_for(std::chrono::milliseconds(TIME));
+    //std::this_thread::sleep_for(std::chrono::milliseconds(TIME));
+    Sleep(TIME);
     system("cls");
 
     // 5. Verifique as posições adjacentes (cima, baixo, esquerda, direita)
@@ -145,6 +174,7 @@ bool walk(Position pos) {
 }
 
 int main(int argc, char* argv[]) {
+    SetConsoleOutputCP(CP_UTF8);
 
     if (argc != 2) {
         std::cerr << "Uso: " << argv[0] << " data//maze.txt" << std::endl;
