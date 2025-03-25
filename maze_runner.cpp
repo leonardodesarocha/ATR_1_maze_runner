@@ -125,11 +125,6 @@ bool is_valid_position(int row, int col) {
 
 // Função principal para navegar pelo labirinto
 bool walk(Position pos) {
-    // 4. Verifique se a posição atual é a saída (maze[pos.row][pos.col] == 's')
-    //    Se for, retorne true
-    if (maze[pos.row][pos.col] == 's')
-        return true;
-
     // 1. Marque a posição atual como visitada (maze[pos.row][pos.col] = '.')
     maze[pos.row][pos.col] = '.';
 
@@ -137,12 +132,10 @@ bool walk(Position pos) {
     print_maze(pos.row, pos.col);
 
     // 3. Adicione um pequeno atraso para visualização:
-    //    std::this_thread::sleep_for(std::chrono::milliseconds(TIME));
-    //std::this_thread::sleep_for(std::chrono::milliseconds(TIME));
     Sleep(TIME);
     system("cls");
 
-    // 5. Verifique as posições adjacentes (cima, baixo, esquerda, direita)
+    // 4. Verifique as posições adjacentes (cima, baixo, esquerda, direita)
     //    Para cada posição adjacente:
     //    a. Se for uma posição válida (use is_valid_position()), adicione-a à pilha valid_positions
     if (is_valid_position(pos.row + 1, pos.col))
@@ -157,20 +150,18 @@ bool walk(Position pos) {
     if (is_valid_position(pos.row, pos.col - 1))
         valid_positions.push({pos.row, pos.col - 1});
 
-    // 6. Enquanto houver posições válidas na pilha (!valid_positions.empty()):
+    // 5. Enquanto houver posições válidas na pilha (!valid_positions.empty()):
     //    a. Remova a próxima posição da pilha (valid_positions.top() e valid_positions.pop())
     //    b. Chame walk recursivamente para esta posição
-    //    c. Se walk retornar true, propague o retorno (retorne true)
     while (!valid_positions.empty()) {
         Position next_pos = valid_positions.top(); // Obtém a posição no topo da pilha
         valid_positions.pop();                    // Remove a posição do topo
     
-        if (walk(next_pos))  // Chama recursivamente
-            return true;     // Se encontrou a saída, retorna true
+        walk(next_pos);  // Chama recursivamente
     }
 
-    // 7. Se todas as posições foram exploradas sem encontrar a saída, retorne false
-    return false;
+    // 6. Continue explorando até que todas as posições possíveis sejam visitadas
+    return false; // Não retorna true, pois queremos explorar todos os caminhos
 }
 
 int main(int argc, char* argv[]) {
@@ -180,7 +171,6 @@ int main(int argc, char* argv[]) {
         std::cerr << "Uso: " << argv[0] << " data//maze.txt" << std::endl;
         return 1;
     }
-    
 
     Position initial_pos = load_maze(argv[1]);
 
@@ -191,14 +181,9 @@ int main(int argc, char* argv[]) {
 
     print_maze(initial_pos.row, initial_pos.col);
 
-    bool exit_found = walk(initial_pos);
+    walk(initial_pos);
 
-    if (exit_found) {
-        std::cout << "Saída encontrada!" << std::endl;
-        print_maze(-2, -2);
-    } else {
-        std::cout << "Não foi possível encontrar a saída." << std::endl;
-    }
+    std::cout << "Todos os caminhos possíveis foram explorados." << std::endl;
 
     return 0;
 }
