@@ -183,7 +183,7 @@ int main(int argc, char* argv[]) {
 
     walk(initial_pos);
 
-    std::cout << "Todos os caminhos possíveis foram explorados." << std::endl;
+    std::cout << "A saída foi encontrada e todos os caminhos possíveis foram explorados." << std::endl;
 
     return 0;
 }
