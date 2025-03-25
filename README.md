@@ -27,4 +27,4 @@ Para compilar o código digite no terminal:
 - g++ maze_runner.cpp -o maze_runner
   
 Para executar o código digite no terminal o seguinte comando e mudando o "maze" para o nome do labirinto que você deseja rodar:
-- ./maze_runner data//maze.txt
+- ./maze_runner data/maze.txt

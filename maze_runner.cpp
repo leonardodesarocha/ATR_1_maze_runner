@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
     SetConsoleOutputCP(CP_UTF8);
 
     if (argc != 2) {
-        std::cerr << "Uso: " << argv[0] << " data//maze.txt" << std::endl;
+        std::cerr << "Uso: " << argv[0] << " data/maze.txt" << std::endl;
         return 1;
     }
 
