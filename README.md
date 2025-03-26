@@ -2,6 +2,9 @@
 
 Este exercício é um programa para encontrar a saída de um labirinto.
 
+Link repositório:
+https://github.com/leonardodesarocha/ATR_1_maze_runner
+
 ### Especificações
 
 - O labirinto é representado por uma matriz em um arquivo de texto.
